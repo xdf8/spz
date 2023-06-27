@@ -56,7 +56,7 @@ class App:
         ar = np.r_[1, -np.array(ar_params)]
         ma = np.r_[1, np.array(ma_params)]
         y = arma_generate_sample(ar, ma, n_sample)
-        
+
         # Apply differencing if i > 0
         y_diff = pd.Series(y).diff(i_param).dropna().to_numpy() if i_param > 0 else y
 
