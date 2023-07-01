@@ -1,13 +1,30 @@
 import tkinter as tk
-from tkinter import messagebox
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from statsmodels.tsa.arima_process import arma_generate_sample
-from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+
 import numpy as np
 import pandas as pd
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+from statsmodels.tsa.arima_process import arma_generate_sample
+
 
 class App:
+    """
+    A tkinter GUI application for creating and visualizing time series using ARIMA models.
+
+    This application allows the user to specify parameters for an ARIMA model, generate a time series based on these parameters, and visualize the time series and its autocorrelation and partial autocorrelation functions.
+
+    Attributes:
+    root (tkinter.Tk): The root window for the tkinter application.
+    ar_entry (tkinter.Entry): Entry widget for AR parameters.
+    i_entry (tkinter.Entry): Entry widget for I parameter.
+    ma_entry (tkinter.Entry): Entry widget for MA parameters.
+    fig_frame (tkinter.Frame): Frame widget for plots.
+
+    Methods:
+    generate(): Generate and display the time series and its ACF and PACF plots based on the entered AR, I, and MA parameters.
+    """
+
     def __init__(self, root):
         self.root = root
         self.root.title("ARIMA Model")
@@ -41,14 +58,18 @@ class App:
 
         # Get AR parameters
         ar_params_str = self.ar_entry.get()
-        ar_params = [float(p) for p in ar_params_str.split(",")] if ar_params_str else []
+        ar_params = (
+            [float(p) for p in ar_params_str.split(",")] if ar_params_str else []
+        )
 
         # Get I parameter
         i_param = int(self.i_entry.get()) if self.i_entry.get() else 0
 
         # Get MA parameters
         ma_params_str = self.ma_entry.get()
-        ma_params = [float(p) for p in ma_params_str.split(",")] if ma_params_str else []
+        ma_params = (
+            [float(p) for p in ma_params_str.split(",")] if ma_params_str else []
+        )
 
         # Generate time series
         np.random.seed(1)
@@ -91,11 +112,13 @@ class App:
         plot_pacf(y_diff, lags=20, ax=ax3)
         ax3.set_title("PACF")
 
-       # Display plots in the GUI
+        # Display plots in the GUI
         canvas = FigureCanvasTkAgg(fig, master=self.fig_frame)
         canvas.draw()
         canvas.get_tk_widget().pack()
 
-root = tk.Tk()
-app = App(root)
-root.mainloop()
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = App(root)
+    root.mainloop()
