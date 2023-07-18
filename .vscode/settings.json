@@ -1,0 +1,15 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none",
+    "cSpell.words": [
+        "Glattkomponente",
+        "imputiereren",
+        "Kalman",
+        "LOES",
+        "Movingaverage",
+        "Stationarität",
+        "TBATS"
+    ]
+}
